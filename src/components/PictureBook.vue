@@ -8,7 +8,8 @@
                         <div class="icon">1</div>
                         <div class="description">
                             <h4>Picture 1</h4>
-                            <p>Description goes here</p>
+                            <!-- pass openModal an argument with the description for the picture -->
+                            <button @click="openModal('hello')">Details</button>
                         </div>
                     </div>
                 </label>
@@ -18,7 +19,7 @@
                         <div class="icon">2</div>
                         <div class="description">
                             <h4>Picture 2</h4>
-                            <p>Description goes here</p>
+                            <button @click="openModal">Details</button>
                         </div>
                     </div>
                 </label>
@@ -28,7 +29,7 @@
                         <div class="icon">3</div>
                         <div class="description">
                             <h4>Picture 3</h4>
-                            <p>Description goes here</p>
+                            <button @click="openModal">Details</button>
                         </div>
                     </div>
                 </label>
@@ -54,8 +55,34 @@
                 </label>
             </div>
         </div>
+        <!-- here you need to pass the PictureDetails component the pictureDescription as a prop -->
+        <PictureDetails :pictureDescription="pictureDescription" :isOpen="isModalOpened" @modal-close="closeModal" name="first-modal">
+            <template #details>{{ pictureDescription }}</template>
+        </PictureDetails>
     </body>
 </template>
+
+<!-- the idea here is that you need to pass the information about the particular picture that you are trying to see details for to the modal using props -->
+
+<script setup>
+import { ref } from "vue";
+import PictureDetails from "./PictureDetails.vue";
+
+const isModalOpened = ref(false);
+
+//picture description
+const pictureDescription = ref("");
+
+const openModal = (string) => {
+    isModalOpened.value = true;
+    //change another property you have here in the script to reflect the correct description
+    pictureDescription = string;
+};
+
+const closeModal = () => {
+    isModalOpened.value = false;
+}
+</script>
 
 <style>
 * {
@@ -76,6 +103,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 
 .container {
     height: 400px;
@@ -98,13 +126,13 @@ body {
     box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8);
 }
 
-.card > .row {
+.card>.row {
     color: white;
     display: flex;
     flex-wrap: nowrap;
 }
 
-.card > .row > .icon {
+.card>.row>.icon {
     color: #223;
     background: white;
     border-radius: 50%;
@@ -115,7 +143,7 @@ body {
     margin: 15px;
 }
 
-.card > .row > .description {
+.card>.row>.description {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -141,11 +169,11 @@ input {
     display: none;
 }
 
-input:checked + label {
+input:checked+label {
     width: 600px;
 }
 
-input:checked + label .description {
+input:checked+label .description {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
@@ -153,16 +181,19 @@ input:checked + label .description {
 .card[for="c1"] {
     background-image: url('../assets/IMG_1935.JPG');
 }
+
 .card[for="c2"] {
     background-image: url('../assets/IMG_1898.jpg');
 }
+
 .card[for="c3"] {
     background-image: url('../assets/IMG_1861.JPG');
 }
+
 .card[for="c4"] {
     background-image: url('../assets/IMG_1944.jpg');
 }
+
 .card[for="c5"] {
     background-image: url('../assets/ThankYouTE.jpg');
-}
-</style>
+}</style>
