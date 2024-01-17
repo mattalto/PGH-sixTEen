@@ -9,7 +9,7 @@
                         <div class="description">
                             <h4>Picture 1</h4>
                             <!-- pass openModal an argument with the description for the picture -->
-                            <button @click="openModal('hello')">Details</button>
+                            <button class="details" @click="openModal">...</button>
                         </div>
                     </div>
                 </label>
@@ -19,7 +19,7 @@
                         <div class="icon">2</div>
                         <div class="description">
                             <h4>Picture 2</h4>
-                            <button @click="openModal">Details</button>
+                            <button class="details" @click="openModal">...</button>
                         </div>
                     </div>
                 </label>
@@ -29,7 +29,7 @@
                         <div class="icon">3</div>
                         <div class="description">
                             <h4>Picture 3</h4>
-                            <button @click="openModal">Details</button>
+                            <button class="details" @click="openModal">...</button>
                         </div>
                     </div>
                 </label>
@@ -39,7 +39,7 @@
                         <div class="icon">4</div>
                         <div class="description">
                             <h4>Picture 4</h4>
-                            <p>Description goes here</p>
+                            <button class="details" @click="openModal">...</button>
                         </div>
                     </div>
                 </label>
@@ -49,7 +49,7 @@
                         <div class="icon">5</div>
                         <div class="description">
                             <h4>Picture 5</h4>
-                            <p>Description goes here</p>
+                            <button class="details" @click="openModal">...</button>
                         </div>
                     </div>
                 </label>
@@ -62,7 +62,8 @@
     </body>
 </template>
 
-<!-- the idea here is that you need to pass the information about the particular picture that you are trying to see details for to the modal using props -->
+<!-- the idea here is that I need to pass the information about the particular picture
+    that I'm trying to see details for to the modal using props -->
 
 <script setup>
 import { ref } from "vue";
@@ -71,12 +72,40 @@ import PictureDetails from "./PictureDetails.vue";
 const isModalOpened = ref(false);
 
 //picture description
-const pictureDescription = ref("");
+const pictureDescription = ref("Graduation day at Tech Elevator! .NET FOR LIFE");
 
-const openModal = (string) => {
+const pictures = ref[
+    {
+        id: 1,
+        title: 'pic 1 title',
+        description: 'picture 1'
+    },
+    {
+        id: 2,
+        title: 'pic 2 title',
+        description: 'picture 2'
+    },
+    {
+        id: 3,
+        title: 'pic 3 title',
+        description: 'picture 3'
+    },
+    {
+        id: 4,
+        title: 'pic 4 title',
+        description: 'picture 4'
+    },
+    {
+        id: 5,
+        title: 'pic 5 title',
+        description: 'picture 5'
+    }
+];
+
+const openModal = () => {
     isModalOpened.value = true;
-    //change another property you have here in the script to reflect the correct description
-    pictureDescription = string;
+    //change another property here in the script to reflect the correct description
+    //pictureDescription = string;
 };
 
 const closeModal = () => {
@@ -163,6 +192,19 @@ body {
 
 .description h4 {
     text-transform: uppercase;
+}
+
+.details {
+    color: #223;
+    background: white;
+    font-weight: bolder;
+    border-radius: 50%;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-self: end;
+    margin-right: 50px;
+    margin-bottom: 20px;
 }
 
 input {
